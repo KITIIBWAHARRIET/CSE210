@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-class Program
+class ListOperations
 {
-    static void Main()
+    public void ProcessNumbers()
     {
         // Create a list to store the numbers
         List<int> numbers = new List<int>();
@@ -14,8 +14,13 @@ class Program
         while (true)
         {
             Console.Write("Enter number: ");
-            string input = Console.ReadLine();
-            int number = int.Parse(input);
+            string? input = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input) || !int.TryParse(input, out int number))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                continue; // ask again
+            }
 
             if (number == 0)
             {
@@ -23,6 +28,12 @@ class Program
             }
 
             numbers.Add(number);
+        }
+
+        if (numbers.Count == 0)
+        {
+            Console.WriteLine("No numbers entered.");
+            return;
         }
 
         // Core Requirement 1: Sum

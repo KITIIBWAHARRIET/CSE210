@@ -1,18 +1,17 @@
 using System;
 
-class Program
+class GuessingGame
 {
-    static void Main()
+    public void Play()
     {
-        string playAgain = "yes";
+        string? playAgain = "yes";
 
-        while (playAgain.ToLower() == "yes")
+        while (!string.IsNullOrWhiteSpace(playAgain) && playAgain.ToLower() == "yes")
         {
-            // Generate a random magic number between 1 and 100
             Random randomGenerator = new Random();
             int magicNumber = randomGenerator.Next(1, 101);
 
-            int guess = -1; // Initialize with a number that's not magicNumber
+            int guess = -1;
             int guessCount = 0;
 
             Console.WriteLine("I have chosen a number between 1 and 100. Try to guess it!");
@@ -20,8 +19,15 @@ class Program
             while (guess != magicNumber)
             {
                 Console.Write("What is your guess? ");
-                string guessInput = Console.ReadLine();
-                guess = int.Parse(guessInput);
+                string? guessInput = Console.ReadLine();
+
+                // 🔒 Fix: Validate guessInput before parsing
+                if (!int.TryParse(guessInput, out guess))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                    continue;
+                }
+
                 guessCount++;
 
                 if (guess < magicNumber)
@@ -39,7 +45,6 @@ class Program
                 }
             }
 
-            // Ask if they want to play again
             Console.Write("Do you want to play again? (yes/no): ");
             playAgain = Console.ReadLine();
             Console.WriteLine();

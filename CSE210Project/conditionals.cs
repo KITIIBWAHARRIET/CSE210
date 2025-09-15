@@ -1,13 +1,18 @@
 using System;
 
-class Program
+class GradeCalculator
 {
-    static void Main()
+    public void CalculateGrade()
     {
         // Ask the user for their grade percentage
         Console.Write("What is your grade percentage? ");
-        string userInput = Console.ReadLine();
-        int percentage = int.Parse(userInput);
+        string? userInput = Console.ReadLine();
+
+        if (string.IsNullOrEmpty(userInput) || !int.TryParse(userInput, out int percentage))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid number for the grade percentage.");
+            return; // exit the method or you can loop to ask again if you prefer
+        }
 
         string letter = "";
         string sign = "";
